@@ -10,7 +10,7 @@ socket.on('message', (message) => {
 
   // Scroll down
   chatMessages.scrollTop = chatMessages.scrollHeight
-  
+
 })
 
 chatForm.addEventListener('submit', (e) => {
@@ -19,15 +19,18 @@ chatForm.addEventListener('submit', (e) => {
   const msg = e.target.elements.msg.value
 
   socket.emit('chatMessage', msg)
-})
 
-function outputMessage(message) {
+  e.target.elements.msg.value = ''
+  e.target.elements.msg.focus()
+
+})
+const outputMessage = message => {
   console.log(message)
   const div = document.createElement('div')
   div.classList.add('message')
-  div.innerHTML = `<p class="meta">Mary <span>9:15pm</span></p>
+  div.innerHTML = `<p class="meta">${message.username} <span>${message.time}</span></p>
   <p class="text">
-  ${message} 
+  ${message.text} 
   </p>`
   document.querySelector('.chat-messages').appendChild(div)
 }
